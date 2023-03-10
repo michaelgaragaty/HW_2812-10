@@ -1,0 +1,15 @@
+Run Services without DB:
+
+# Superset:
+kubectl run superset --image=amancevice/superset
+kubectl expose pod superset --port=80 --target-port=8088 --type=NodePort
+
+# Airflow
+kubectl run airflow --image=puckel/docker-airflow
+kubectl expose pod superset --port=80 --target-port=8080 --type=NodePort
+
+OR
+
+# Run Services yaml files
+kubectl create -f superset-service.yml
+kubectl create -f airflow-service.yml
