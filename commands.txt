@@ -13,3 +13,7 @@ OR
 # Run Services yaml files
 kubectl create -f superset-service.yml
 kubectl create -f airflow-service.yml
+
+# BONUS#
+kubectl create -f airflow-frontend-deployment.yml
+kubectl create -f airflow-backend-deployment.yml
