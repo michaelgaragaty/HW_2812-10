@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airflow-backend-deployment
+  labels:
+    app: airflow
+spec:
+  selector:
+    matchLabels:
+      app: airflow
+      tier: backend
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: airflow
+        tier: backend
+    spec:
+      containers:
+        - name: airflow-db
+          image: arm64v8/mysql
+          env:
+            - name: MYSQL_ROOT_USER
+              value: root
+            - name: MYSQL_ROOT_PASSWORD
+              value: airflow
+            - name: MYSQL_DATABASE
+              value: airflow
+          ports:
+            - containerPort: 3306            
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: airflow-backend-service
+  labels:
+    app: airflow
+    tier: backend
+spec:
+  selector:
+    app: airflow
+    tier: backend
+  type: NodePort
+  ports:
+    - port: 3306
+      targetPort: 3306

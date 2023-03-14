@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airflow-pgadmin-deployment
+  labels:
+    app: airflow
+spec:
+  selector:
+    matchLabels:
+      app: airflow
+      tier: frontend
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: airflow
+        tier: frontend
+    spec:
+      containers:
+        - name: airflow-pgadmin
+          image: dpage/pgadmin4
+          env:
+            - name: POSTGRES_DEFAULT_EMAIL
+              value: ex@ex.com
+            - name: POSTGRES_DEFAULT_PASSWORD
+              value: postgres
+          ports:
+            - containerPort: 80             
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: airflow-pgadmin-service
+  labels:
+    app: airflow
+    tier: frontend
+spec:
+  selector:
+    app: airflow
+    tier: frontend
+  type: NodePort
+  ports:
+    - port: 15432
+      targetPort: 80
