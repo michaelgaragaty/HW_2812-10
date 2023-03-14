@@ -22,6 +22,16 @@ spec:
           env:
             - name: LOAD_EX
               value: '1'
+            - name: AIRFLOW_CONN_POSTGRES_MASTER
+              value: postgres://airflow:airflow@localhost:5432/master
+            - name: POSTGRES_PORT
+              value: '5432'
+            - name: POSTGRES_USER
+              value: airflow
+            - name: POSTGRES_PASSWORD
+              value: airflow
+            - name: POSTGRES_DB
+              value: airflow
           ports:
             - containerPort: 8080
 ---

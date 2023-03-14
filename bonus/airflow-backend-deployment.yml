@@ -18,16 +18,16 @@ spec:
     spec:
       containers:
         - name: airflow-db
-          image: arm64v8/mysql
+          image: arm64v8/postgres
           env:
-            - name: MYSQL_ROOT_USER
-              value: root
-            - name: MYSQL_ROOT_PASSWORD
+            - name: POSTGRES_USER
               value: airflow
-            - name: MYSQL_DATABASE
+            - name: POSTGRES_PASSWORD
+              value: airflow
+            - name: POSTGRESS_DB
               value: airflow
           ports:
-            - containerPort: 3306            
+            - containerPort: 5432            
 ---
 apiVersion: v1
 kind: Service
@@ -42,5 +42,5 @@ spec:
     tier: backend
   type: NodePort
   ports:
-    - port: 3306
-      targetPort: 3306
+    - port: 5432
+      targetPort: 5432
